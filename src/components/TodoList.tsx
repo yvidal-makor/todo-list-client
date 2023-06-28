@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import "./style.css";
 import { Todo } from "./model";
 import { SingleTodo } from "./SingleTodo";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 
-interface Props {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-}
 
-export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
+
+export const TodoList: React.FC = () => {
+ const todosState = useAppSelector((state) => state.todos.todoList);
+ const dispatch = useAppDispatch();
+
+  
+
   return (
     <div className="todos">
-      {todos.map((todo) => (
+      {todosState.map((todo) => (
         <SingleTodo
           todo={todo}
-          key={todo.id}
-          todos={todos}
-          setTodos={setTodos}
+          // key={todo.id}
+          // todos={todos}
+          // setTodos={setTodos}
         />
       ))}
     </div>

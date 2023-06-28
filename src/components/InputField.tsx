@@ -1,5 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./style.css";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { add } from "../redux/reducers/todosReducer";
+import todosSlice from "../redux/reducers/todosReducer";
 
 interface Props {
   todo: string;
@@ -9,12 +12,14 @@ interface Props {
 
 export const InputField: React.FC<Props> = ({ todo, setTodo, handleAdd }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const todos = useAppSelector((state) => state.todos.todoList);
+  const dispatch = useAppDispatch();
   return (
     <form
       className="input"
       onSubmit={(e) => {
         handleAdd(e);
+        dispatch(add({ id: Date.now(), todo, isDone: false }));
         inputRef.current?.blur();
       }}
     >
